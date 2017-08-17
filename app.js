@@ -32,7 +32,6 @@ app.post('/', function(req, res){
     //Tell middleware which validators to apply (chain one or more).
     // req.checkBody("user", "You must enter a username!").notEmpty();
 
-    console.log("User 1: " + req.body.user);
 
     // Render validation error messages
     // var errors = req.getValidationResult();
@@ -40,14 +39,14 @@ app.post('/', function(req, res){
     //   var html = errors;
     //   res.send(html);
     // } else {
-      console.log("Body: " + req.body);
-      var user = req.body.user;
-      console.log("User 2: " + user);
-      var html = '<p>Your user name is: </p>' + user;
-      res.send(html);
+      let user = req.body.user;
+      console.log("Entry: " + user);
+      // var html = '<p>Your user name is: </p>' + user;
+      // res.send(html);
+      res.render('todo', data);
     // }
   });
 
-app.listen(3000, function(){
+app.listen(3030, function(){
   console.log('Started express application!')
 });

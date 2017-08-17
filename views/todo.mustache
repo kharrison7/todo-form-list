@@ -1,10 +1,7 @@
 
 
-
-
-
-
-<form action="/" method="post">
+<body>
+     <form action="/" method="post">
            <h1>Your List</h1>
            <p>Enter a Todo Item</p>
            <input type="text" name="user" placeholder="todo_item" />
@@ -12,10 +9,12 @@
       </form>
 
 <div>
-  {{#user}}
-  <p>{{user}}</p>
-  {{/user}}
-  {{^user}}
+  {{#todo_list}}
+  <p>{{entry}}</p>
+  {{/todo_list}}
+  {{^todo_list}}
   <p>No Todo Items Yet</p>
-  {{/user}}
+  {{/todo_list}}
 </div>
+
+</body>

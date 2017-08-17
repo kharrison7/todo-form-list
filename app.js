@@ -24,8 +24,8 @@ let todosList = [{entry: "Example Todo"}];
 
 app.get('/', function(req, res){
   // Set 'action' to '/'
-  console.log(todosList[0]);
-  console.log(todosList[1]);
+  console.log("Basic get run!");
+  console.log("Last item: "+todosList[todosList.length-1].entry);
   res.render('todo', {todo_list: todosList})});
 
 
@@ -33,7 +33,7 @@ app.get('/', function(req, res){
 // Receives data from form (action='/')
 // 'req.body' now contains form data.
 app.post('/', function(req, res){
-  console.log("req sent");
+  console.log("post active: Added a todo");
   //Call req.checkBody function.
     //Pass inputs to validate.
     //Tell middleware which validators to apply (chain one or more).
@@ -41,13 +41,14 @@ app.post('/', function(req, res){
 
 
     // Render validation error messages
+    // var errors = req.validationErrors();
     // var errors = req.getValidationResult();
     // if (errors) {
     //   var html = errors;
     //   res.send(html);
     // } else {
       let user = req.body.user;
-      console.log("Entry: " + user);
+    //   console.log("Entry: " + user);
       // var html = '<p>Your user name is: </p>' + user;
       // res.send(html);
       todosList.push({entry: `${user}`});
@@ -55,6 +56,14 @@ app.post('/', function(req, res){
       // res.render('todo', data);
     // }
   });
+
+
+
+  app.delete('/', function(req, res){
+    console.log("delete active");
+    res.redirect('/');
+      });
+
 
 app.listen(3030, function(){
   console.log('Started express application!')

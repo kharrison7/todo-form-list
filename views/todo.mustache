@@ -1,5 +1,10 @@
-
-
+<!DOCTYPE html>
+ <html>
+   <head>
+     <title></title>
+     <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" />
+     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" />
+   </head>
 <body>
      <form action="/" method="post">
            <h1>Your List</h1>
@@ -10,8 +15,14 @@
 
 <div>
   {{#todo_list}}
-  <p>{{entry}}</p>
+  <form action="/" method="delete">
+    <div class="holder">
+      <p class="leftMove">{{entry}}</p>
+      <button class="completed" type="submit">Completed</button>
+    </div>
+   </form>
   {{/todo_list}}
+
   {{^todo_list}}
   <p>No Todo Items Yet</p>
   {{/todo_list}}

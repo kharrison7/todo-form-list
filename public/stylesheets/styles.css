@@ -1,0 +1,19 @@
+.completed {
+  /*float: right;*/
+  margin-top: 10pt;
+  margin-left: 10pt;
+}
+p {
+  color: blue;
+}
+form {
+  border: 1pt solid grey;
+}
+.holder {
+  display: block;
+  border: 1pt solid grey;
+  height: 40pt;
+}
+.leftMove {
+ float: left;
+}

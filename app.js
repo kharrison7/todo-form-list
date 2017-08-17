@@ -1,5 +1,6 @@
 //app.js code here.
 let express = require('express');
+const path = require('path');
 let bodyParser = require('body-parser');
 let expressValidator = require('express-validator');
 const mustacheExpress = require('mustache-express');
@@ -19,9 +20,15 @@ app.set('views', './views');
 app.set('view engine', 'mustache');
 app.use(express.static(__dirname + '/public'));
 
+let todosList = [{entry: "Example Todo"}];
+
 app.get('/', function(req, res){
   // Set 'action' to '/'
-  res.render('todo', data)});
+  console.log(todosList[0]);
+  console.log(todosList[1]);
+  res.render('todo', {todo_list: todosList})});
+
+
 
 // Receives data from form (action='/')
 // 'req.body' now contains form data.
@@ -43,7 +50,9 @@ app.post('/', function(req, res){
       console.log("Entry: " + user);
       // var html = '<p>Your user name is: </p>' + user;
       // res.send(html);
-      res.render('todo', data);
+      todosList.push({entry: `${user}`});
+      res.redirect('/');
+      // res.render('todo', data);
     // }
   });
 

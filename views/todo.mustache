@@ -14,6 +14,7 @@
       </form>
 
 <div>
+  <!-- This displays todo items if there are some listed. -->
   {{#todo_list}}
   <form action="/" method="delete">
     <div class="holder">
@@ -22,7 +23,7 @@
     </div>
    </form>
   {{/todo_list}}
-
+  <!-- This displays if there are currently no todo items. -->
   {{^todo_list}}
   <p>No Todo Items Yet</p>
   {{/todo_list}}

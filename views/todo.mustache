@@ -19,14 +19,29 @@
   <form action="/" method="delete">
     <div class="holder">
       <p class="leftMove">{{entry}}</p>
-      <button class="completed" type="submit">Completed</button>
+        <button class="completed" type="submit">Completed</button>
+      </div>
     </div>
    </form>
   {{/todo_list}}
+
   <!-- This displays if there are currently no todo items. -->
   {{^todo_list}}
   <p>No Todo Items Yet</p>
   {{/todo_list}}
+
+
+  {{#done}}
+  <p>done1</p>
+  {{/done}}
+  {{^done}}
+  <p>done2</p>
+  {{/done}}
+
+
+
+
 </div>
+<script type="text/javascript" src="javascripts/main.js"></script>
 
 </body>

@@ -20,12 +20,12 @@ app.set('views', './views');
 app.set('view engine', 'mustache');
 app.use(express.static(__dirname + '/public'));
 
-let todosList = [{entry: "Example Todo"}];
-
+let todosList = [];
+// {entry: "Example Todo", done: "false"}
 app.get('/', function(req, res){
   // Set 'action' to '/'
   console.log("Basic get run!");
-  console.log("Last item: "+todosList[todosList.length-1].entry);
+  // console.log("Last item: "+todosList[todosList.length-1].entry);
   res.render('todo', {todo_list: todosList})});
 
 
@@ -51,7 +51,7 @@ app.post('/', function(req, res){
     //   console.log("Entry: " + user);
       // var html = '<p>Your user name is: </p>' + user;
       // res.send(html);
-      todosList.push({entry: `${user}`});
+      todosList.push({entry: `${user}`, done: "false"});
       res.redirect('/');
       // res.render('todo', data);
     // }
@@ -61,8 +61,8 @@ app.post('/', function(req, res){
 
   app.delete('/', function(req, res){
     console.log("delete active");
-    res.redirect('/');
-      });
+    // res.redirect('/');
+    });
 
 
 app.listen(3030, function(){

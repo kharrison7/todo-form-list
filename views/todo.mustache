@@ -7,52 +7,31 @@
    </head>
 <body>
      <form action="/" method="post">
-           <h1>Your List</h1>
+           <!-- <h1>Your List</h1> -->
            <p>Enter a Todo Item</p>
            <input type="text" name="user" placeholder="Add a todo item" />
            <button type="submit">Add Todo</button>
       </form>
-
-<div>
-  <!-- This displays todo items if there are some listed. -->
-  {{#todo_list}}
-  <form action="/" method="delete">
-    <div class="holder">
-      <p class="leftMove">{{entry}}</p>
-        <button class="completed" type="submit">Completed</button>
-      </div>
-    </div>
-   </form>
-  {{/todo_list}}
-
-  <!-- This displays if there are currently no todo items. -->
-  {{^todo_list}}
-  <p>No Todo Items Yet</p>
-  {{/todo_list}}
-
-
-  {{#done}}
-  <p>done1</p>
-  {{/done}}
-  {{^done}}
-  <p>done2</p>
-  {{/done}}
-
-
-  {{#todosMustache}}
-    <form id={{.}} action="/{{.}}" method="post">
-      <span>{{.}}</span><button type="submit">Finish</button>
-    </form>
-  {{/todosMustache}}
-  <h2>Done:</h2>
-  {{#doneMustache}}
-    <p>{{.}}</p>
-  {{/doneMustache}}
-
-
-
-
-</div>
-<script type="text/javascript" src="javascripts/main.js"></script>
-
+    <div>
+      <!-- This displays todo items if there are some listed. -->
+      {{#todosList}}
+      <form id={{.}} action="/{{.}}" method="post">
+        <div class="holder">
+          <p class="leftMove"><span>{{.}}</span></p>
+            <button class="completed" type="submit">Completed</button>
+          </div>
+        </div>
+       </form>
+      {{/todosList}}
+      <!-- This displays if there are currently no todo items. -->
+      {{^todosList}}
+       <p>No Todo Items Currently</p>
+      {{/todosList}}
+      <!-- This shows the completed items. -->
+      <h4>Completed:</h4>
+      {{#doneList}}
+        <p class="strike">{{.}}</p>
+      {{/doneList}}
+   </div>
+  <script type="text/javascript" src="javascripts/main.js"></script>
 </body>

@@ -1,4 +1,5 @@
 //app.js code here.
+// runs at http://localhost:3000/
 let express = require('express');
 const path = require('path');
 let bodyParser = require('body-parser');
@@ -7,6 +8,8 @@ const mustacheExpress = require('mustache-express');
 const data = require('./items.js');
 
 const file = './fill.json';
+
+// Creates and includes a file system (fs) module
 const fs = require('fs');
 
 // Create app
@@ -15,7 +18,6 @@ let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //'extended: false' parses strings and arrays.
-//'extended: true' parses nested objects
 //'expressValidator' must come after 'bodyParser', since data must be parsed first!
 app.use(expressValidator());
 
@@ -24,103 +26,63 @@ app.set('views', './views');
 app.set('view engine', 'mustache');
 app.use(express.static(__dirname + '/public'));
 
-// let todosList = [];
-// {entry: "Example Todo", done: "false"}
-app.get('/', function(req, res){
-  // Set 'action' to '/'
-  console.log("Basic get run!");
-  // console.log("Last item: "+todosList[todosList.length-1].entry);
-  // res.render('todo', {todo_list: todosList})});
 
+app.get('/', function(req, res){
+  console.log("Basic get run!");
   //fs.readFile reads the fill.json file
-  fs.readFile('fill.json', 'utf8', function readFileCallback(err, data){
+  fs.readFile('fill.json', 'utf8', function checkSortFile(err, d){
+
       if (err){
           console.log(err);
       } else {
-      obj = JSON.parse(data);//Turns fill.json into an object named obj
-      var todoarray = obj.todoArray; //declares makes the todoarray
-      var donearray = obj.doneArray; //declares makes the donearray
-      // this makes todosMustache the todoarray var
-      res.render('todo', { todosMustache: todoarray,  doneMustache: donearray});
+      let value = JSON.parse(d);
+      // This fills variables with the arrays from fill.json.
+      let todoarray = value.todo_List;
+      let donearray = value.completed;
+      res.render('todo', { todosList: todoarray,  doneList: donearray});
   }});
-  // This will make todosMustache the todosArray
-  // res.render('todo', { todosMustache: todosArray });
 });
-
-
-
-
-
-// Receives data from form (action='/')
-// 'req.body' now contains form data.
 app.post('/', function(req, res){
-  console.log("post active: Added a todo");
-  //Call req.checkBody function.
-    //Pass inputs to validate.
-    //Tell middleware which validators to apply (chain one or more).
-    // req.checkBody("user", "You must enter a username!").notEmpty();
-
-    var addtolist = req.body.user; //Gets the text in the input tag with name ="user"
-    fs.readFile('fill.json', 'utf8', function readFileCallback(err, data){
+    let inputValue = req.body.user; //Gets the text in the input tag with name ="user"
+    if( inputValue != "" && inputValue != null){ // This ignore inputs of "" or null
+    fs.readFile('fill.json', 'utf8', function checkSortFile(err, data){
         if (err){
             console.log(err);
         } else {
-        obj = JSON.parse(data); //now its an object
-        obj.todoArray.push(addtolist); //pushes the text to an array
-        json = JSON.stringify(obj); //converts back to json
-        fs.writeFile('fill.json', json, 'utf8'); // writes to file
-    }});
+        let value = JSON.parse(data); //converts to an object
+        value.todo_List.push(inputValue);
+        json = JSON.stringify(value); //converts back to json
+        fs.writeFile('fill.json', json, 'utf8'); // writes to file fill.json with json
+        //utf8 is a file format character encoding.
+    }})};
     res.redirect('/');//reloads page
-
-    // Render validation error messages
-    // var errors = req.validationErrors();
-    // var errors = req.getValidationResult();
-    // if (errors) {
-    //   var html = errors;
-    //   res.send(html);
-    // } else {
-      // let user = req.body.user;
-    //   console.log("Entry: " + user);
-      // var html = '<p>Your user name is: </p>' + user;
-      // res.send(html);
-      // todosList.push({entry: `${user}`, done: "false"});
-      // res.redirect('/');
-      // res.render('todo', data);
-    // }
   });
 
-
-  //This is dynamic, meaning any time i click a button that is not "/", this will fire
+  // This is what removes the values upon completion.
+  //This is dynamic, meaning any time a button besides "/" is clicked this will fire.
   app.post("/:dynamic", function (req, res) {
-    fs.readFile('fill.json', 'utf8', function readFileCallback(err, data){
+    fs.readFile('fill.json', 'utf8', function checkSortFile(err, data){
         if (err){
             console.log(err);
         } else {
-        obj = JSON.parse(data); //now its an object
-          // iterate over each element in the array
-          for (var i = 0; i < obj.todoArray.length; i++){
-          // look for the entry with a matching value
-            if (obj.todoArray[i] === req.params.dynamic){//req.params.dynamic finds the value of dynamic
-              var change = obj.todoArray[i]; //this sets change to the string to delete
-              console.log("I am deleting " + change);//logs the string to delete
-              obj.doneArray.push(change);//pushes the string to delete to the done array
-              obj.todoArray.splice(i, 1);//splices the string from the to do array
+        let val = JSON.parse(data); //val is an object filled with the json data of fill.json
+          for (let i = 0; i < val.todo_List.length; i++){
+            if (val.todo_List[i] === req.params.dynamic){//dynamic being whatever is clicked on
+              let alt = val.todo_List[i];
+              console.log("Alteration: " + alt);
+              val.completed.push(alt);
+              val.todo_List.splice(i, 1);
             }
           }
-        json = JSON.stringify(obj); //converts back to json
-        fs.writeFile('fill.json', json, 'utf8'); // writes to file
+        json = JSON.stringify(val); //converts a JavaScript value to a JSON string
+        fs.writeFile('fill.json', json, 'utf8');
     }});
-    res.redirect('/');//reloads page
+    res.redirect('/');
   });
-
-
-
   app.delete('/', function(req, res){
     console.log("delete active");
     // res.redirect('/');
     });
-
-
-app.listen(3030, function(){
+app.listen(3000, function(){
   console.log('Started express application!')
 });

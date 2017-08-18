@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Robot Directory</title>
+    <!-- This connects the users.mustache to the css. -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  </head>
+  <body>
+<!-- This is from the zip file. -->
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- TODO write your HTML/Mustache here -->
+          <h1>Index: {{text1}}</h1>
+           <!-- <br /> -->
+           <hr />
+       <div class="flexHere">
+           {{#users}}
+        <a href="/users/{{username}}"> <div class="robotBox" id="{{id}}">
+                <img class="robotAvatar" src="{{avatar}}">
+                <h6>{{name}}</h6>
+                <!-- <p></p> -->
+                {{#job}}
+                <p class="jobs">{{job}}, {{company}}</p>
+                {{/job}}
+                {{^job}}
+                <p class="hireMe">Available for hire</p>
+                {{/job}}
+             </div></a>
+           {{/users}}
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>

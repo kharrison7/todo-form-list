@@ -39,6 +39,17 @@
   {{/done}}
 
 
+  {{#todosMustache}}
+    <form id={{.}} action="/{{.}}" method="post">
+      <span>{{.}}</span><button type="submit">Finish</button>
+    </form>
+  {{/todosMustache}}
+  <h2>Done:</h2>
+  {{#doneMustache}}
+    <p>{{.}}</p>
+  {{/doneMustache}}
+
+
 
 
 </div>
